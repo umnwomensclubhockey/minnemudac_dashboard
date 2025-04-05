@@ -22,11 +22,16 @@ st.title("🧠 BBBS Match Risk, Sentiment & Prediction Explorer")
 @st.cache_data
 def load_data():
     predictions = pd.read_csv("test_risk_predictions.csv")
-    notes = pd.read_csv("training_data.csv")
     submission = pd.read_csv("Testset_Predictions_Submit.csv")
-    return predictions, notes, submission
+    return predictions, submission
 
-pred_df, notes_df, submit_template = load_data()
+@st.cache_data
+def load_training_data():
+    url = "https://drive.google.com/uc?id=1ux6HN_1bdgpUMdlizXnhNUw56Nz01l2h"
+    return pd.read_csv(url)
+
+pred_df, submit_template = load_data()
+notes_df = load_training_data()
 notes_df["Completion Date"] = pd.to_datetime(notes_df["Completion Date"], errors="coerce")
 
 # Tabs layout
